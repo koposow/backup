@@ -52,6 +52,7 @@ pg_dump -U koposov  -h kophost -p 5432 -d netology_bd -f > /backups/backup_file.
 
 ```sql 
 pg_restore -U koposov  -h kophost -p 5432 -d netology_bd -f < /backups/backup_file.sql
+
 ```
 - koposov - имя пользователя базы данных
 - kophost - имя хоста базы данных
@@ -70,13 +71,12 @@ pg_restore -U koposov  -h kophost -p 5432 -d netology_bd -f < /backups/backup_fi
 
 ### Решение 3:
 ```sql 
-mysqldump --user=koposov --password=your_password --host=kophost --port=3306 --databases netology_bd > /backups/backup_file.sql 
+mysqlbackup --user=koposov --password=your_password  --backup-dir=/backups --incremental --incremental-base=history:last_backup
+
 ```
 - user=koposov - имя пользователя базы данных MySQL.
-- password=your_password - пароль пользователя базы данных MySQL.
-- host=kophost - имя хоста базы данных MySQL.
-- port=3306 - порт базы данных MySQL.
-- databases netology_bd - имя базы данных MySQL, которую вы хотите скопировать.
-- /backups/backup_file.sql: сохранение резервной копии в файл с именем backup_file.sql.
+- password=your_password - пароль пользователя базы данных MySQL
+- --incremental - указывает, что это команда для создания инкрементного резервного копирования.
+- --incremental-base=history:last_backup - определяет базу для инкрементного резервного копирования. history:last_backup указывает на последнюю полную или инкрементную резервную копию в истории резервного копирования.
 ---
 
